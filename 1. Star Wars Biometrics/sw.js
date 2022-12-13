@@ -80,21 +80,22 @@ function displayResult(items) {
 
 // Item bootstrap card factory function
 function createCard(character) {
-    const card = 
-`Description: ${character.description}
-birth_year: ${character.properties.birth_year}
-created: ${character.properties.created}
-edited: ${character.properties.edited}
-eye_color: ${character.properties.eye_color}
-gender: ${character.properties.gender}
-hair_color: ${character.properties.hair_color}
-height: ${character.properties.height}
-homeworld: ${character.properties.homeworld}
-mass: ${character.properties.mass}
-name: ${character.properties.name}
-skin_color: ${character.properties.skin_color}
-url: ${character.properties.url}
+    const card =
+`Name:       ${character.properties.name}
+Gender:     ${character.properties.gender}
+Hair color: ${character.properties.hair_color}
+Height:     ${character.properties.height}
+Mass:       ${character.properties.mass}
 
 `;
-   return card;
+    // Other attributes, not in use
+    // Description: ${character.description}
+    // birth_year: ${character.properties.birth_year}
+    // created: ${character.properties.created}
+    // edited: ${character.properties.edited}
+    // eye_color: ${character.properties.eye_color}
+    // homeworld: ${character.properties.homeworld}
+    // skin_color: ${character.properties.skin_color}
+    // url: ${character.properties.url}
+    return card;
 }
