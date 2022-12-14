@@ -96,7 +96,7 @@ function createElement(drawnCard) {
 
     // Create a image element for the card image and add the URL
     const cardImage = document.createElement('img');
-    cardImage.classList.add('img');
+    cardImage.classList.add('img-fluid');
     cardImage.setAttribute('src', drawnCard.images.png);
 
     // Append card image to the column
