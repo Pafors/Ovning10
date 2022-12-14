@@ -11,10 +11,9 @@ const form = document.querySelector('#inputForm');
 let getData;
 
 // Start Web Worker if available, otherwise use same thread
-let fetchWorker = null;
 if (window.Worker) {
-    getData = getApiWebWorker;
-    fetchWorker = new Worker('./fetchWorker.js');
+    const fetchWorker = new Worker('./fetchWorker.js');
+    getData = getApiWebWorker(fetchWorker);
     fetchWorker.onmessage = (e) => {
         displayResult(e.data);
     }
@@ -54,7 +53,6 @@ function searchForCharacter(e) {
 }
 
 function getApi(fullUri) {
-    console.log("Classic");
     displayInfo("(hämtar data)");
     fetch(fullUri)
         .then(res => res.json())
@@ -64,10 +62,11 @@ function getApi(fullUri) {
         .catch(err => console.log(err))
 }
 
-function getApiWebWorker(fullUri) {
-    console.log("Web Worker");
-    displayInfo("(hämtar data)");
-    fetchWorker.postMessage(fullUri);
+function getApiWebWorker(fetchWorker) { 
+    return (fullUri) => {
+        displayInfo("(hämtar data)");
+        fetchWorker.postMessage(fullUri);
+    }
 }
 
 // Simple display of info

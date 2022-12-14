@@ -1,3 +1,7 @@
-.monotype {
-  font-family: monospace;
+.fg-spacecolor {
+  color: cyan;
+}
+
+.bg-spacecolor {
+  background-color: black;
 }
