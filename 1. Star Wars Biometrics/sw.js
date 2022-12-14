@@ -14,11 +14,13 @@ let getData;
 if (window.Worker) {
     const fetchWorker = new Worker('./fetchWorker.js');
     getData = getApiWebWorker(fetchWorker);
+    // Receives messages from the Web Worker and displays the data
     fetchWorker.onmessage = (e) => {
         displayResult(e.data);
     }
 }
 else {
+    // Web Workers are not available use same thread in browser
     getData = getApi;
 }
 
@@ -52,6 +54,7 @@ function searchForCharacter(e) {
     }
 }
 
+// Fetches the data from the URI using fetch
 function getApi(fullUri) {
     displayInfo("(hämtar data)");
     fetch(fullUri)
@@ -62,6 +65,7 @@ function getApi(fullUri) {
         .catch(err => console.log(err))
 }
 
+// Returns a closure with the Web Worker so it has the same interface as "getApi()"
 function getApiWebWorker(fetchWorker) { 
     return (fullUri) => {
         displayInfo("(hämtar data)");
