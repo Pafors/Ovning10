@@ -78,18 +78,18 @@ function displayInfo(infoText) {
 }
 
 // Display the received array in the display area
-function displayResult(items) {
+function displayResult(characters) {
     // Clear previous result
     display.innerHTML = '';
 
     // If empty, inform user
-    if (items.result.length === 0) {
+    if (characters.result.length === 0) {
         displayInfo('(inget resultat)');
         return;
     }
 
-    // Iterate through all items and add them
-    items.result.forEach((character) => {
+    // Iterate through all characters and add them to the display
+    characters.result.forEach((character) => {
         // Add item card to row
         display.innerHTML += createCard(character);
     });
