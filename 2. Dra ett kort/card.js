@@ -44,7 +44,7 @@ function drawACard(e) {
 }
 
 function getApi(fullUri) {
-    displayInfo("(hämtar data)");
+    displayInfo("(hämtar kort)");
     fetch(fullUri)
         .then(res => res.json())
         .then(data => {
@@ -55,7 +55,7 @@ function getApi(fullUri) {
 
 function getApiWebWorker(fetchWorker) {
     return (fullUri) => {
-        displayInfo("(hämtar data)");
+        displayInfo("(hämtar kort)");
         fetchWorker.postMessage(fullUri);
     }
 }
@@ -70,7 +70,6 @@ function displayInfo(infoText) {
 
 // Display the received array in the display area
 function displayResult(result) {
-    console.log(result)
     // Clear previous result
     display.innerHTML = '';
 
