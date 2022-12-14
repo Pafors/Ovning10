@@ -91,7 +91,7 @@ function displayResult(result) {
 function createElement(drawnCard) {
     // Create a new boot strap grid column for the card image
     const newColumn = document.createElement('div');
-    newColumn.classList.add('col-4');
+    newColumn.classList.add('col-sm-4');
 
     // Create a image element for the card image and add the URL
     const cardImage = document.createElement('img');
