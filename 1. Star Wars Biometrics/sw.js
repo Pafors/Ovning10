@@ -7,9 +7,24 @@ const display = document.querySelector('#displayResult');
 // Get reference to the form
 const form = document.querySelector('#inputForm');
 
+// The placeholder for the function that will get data from an API
+let getData;
+
+// Start Web Worker if available, otherwise use same thread
+let fetchWorker = null;
+if (window.Worker) {
+    getData = getApiWebWorker;
+    fetchWorker = new Worker('./fetchWorker.js');
+    fetchWorker.onmessage = (e) => {
+        displayResult(e.data);
+    }
+}
+else {
+    getData = getApi;
+}
+
 // Add event listener for the nodes in the form
 form.addEventListener('submit', (e) => searchForCharacter(e));
-
 
 // Event handler for the input form
 function searchForCharacter(e) {
@@ -26,7 +41,7 @@ function searchForCharacter(e) {
             if (character === '') { e.target.reset(); return; }
 
             // Get the data
-            getApi(`${starWarsApiUrl}?name=${character}`);
+            getData(`${starWarsApiUrl}?name=${character}`);
 
             // Clear the input form
             e.target.reset();
@@ -39,6 +54,7 @@ function searchForCharacter(e) {
 }
 
 function getApi(fullUri) {
+    console.log("Classic");
     displayInfo("(hämtar data)");
     fetch(fullUri)
         .then(res => res.json())
@@ -48,6 +64,11 @@ function getApi(fullUri) {
         .catch(err => console.log(err))
 }
 
+function getApiWebWorker(fullUri) {
+    console.log("Web Worker");
+    displayInfo("(hämtar data)");
+    fetchWorker.postMessage(fullUri);
+}
 
 // Simple display of info
 function displayInfo(infoText) {
@@ -59,8 +80,6 @@ function displayInfo(infoText) {
 
 // Display the received array in the display area
 function displayResult(items) {
-    console.log(items);
-    console.log(items.result);
     // Clear previous result
     display.innerHTML = '';
 
@@ -81,7 +100,7 @@ function displayResult(items) {
 // Item bootstrap card factory function
 function createCard(character) {
     const card =
-`Name:       ${character.properties.name}
+        `Name:       ${character.properties.name}
 Gender:     ${character.properties.gender}
 Hair color: ${character.properties.hair_color}
 Height:     ${character.properties.height}
