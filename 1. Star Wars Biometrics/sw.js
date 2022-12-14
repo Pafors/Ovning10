@@ -30,7 +30,7 @@ function searchForCharacter(e) {
     // Stop event bubbling up, mostly for "submit" button
     e.preventDefault();
 
-    // Get the new item from the form, remove empty spaces
+    // Get the character name from the form, remove empty spaces
     const character = form['sw-character-field'].value.trim();
 
     switch (e.target.id) {
@@ -90,13 +90,13 @@ function displayResult(characters) {
 
     // Iterate through all characters and add them to the display
     characters.result.forEach((character) => {
-        // Add item card to row
+        // Add "card" to row
         display.innerHTML += createCard(character);
     });
 
 }
 
-// Item bootstrap card factory function
+// Character bootstrap "card" factory function
 function createCard(character) {
     const card =
         `Name:       ${character.properties.name}
